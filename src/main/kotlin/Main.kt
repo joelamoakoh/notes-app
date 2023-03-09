@@ -46,7 +46,7 @@ fun addNote(){
     val noteTitle = readNextLine("Enter a title for the note: ")
     val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
     val noteCategory = readNextLine("Enter a category for the note: ")
-    val isAdded = noteAPI.add(Note(noteTitle, notePriority, noteCategory, false))
+    val isAdded = noteAPI.add(Note(noteTitle, notePriority, noteCategory, isNoteArchived = false))
 
     if (isAdded) {
         println("Added Successfully")
@@ -65,7 +65,18 @@ fun updateNote(){
 }
 
 fun deleteNote(){
-    logger.info { "addNote() function invoked" }
+    //logger.info { "deleteNotes() function invoked" }
+    listNotes()
+    if (noteAPI.numberOfNotes() > 0){
+        //ask the user to choose the note to delete if it exists!
+        val indexToDelete = readNextInt("ENTER THE INDEX OF THE NOTE TO DELETE: ")
+        //pass the index thats put in for deleting and check if it worked.
+        val noteToDelete = noteAPI.deleteNote(indexToDelete)
+        if (noteToDelete != null){
+            println("Delete Successful! Deleted note: ${noteToDelete.noteTitle}")
+        }else
+            println("Delete Didn't work unfortunately")
+    }
 }
 
 fun exitApp(){
